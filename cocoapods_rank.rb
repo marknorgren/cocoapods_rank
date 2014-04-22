@@ -5,7 +5,8 @@ require 'pry'
 class Pod::Specification
   class << self
     def github_client
-      @client ||= Octokit::Client.new(oauth_token: ENV['GITHUB_TOKEN'])
+      puts 'github token: ' + ENV['GITHUB_TOKEN']
+      @client ||= Octokit::Client.new(:access_token => ENV['GITHUB_TOKEN'])
     end
   end
 
