@@ -12,7 +12,7 @@ class Pod::Specification
       rateLimitRemaining = @client.rate_limit.remaining
       puts 'rate limit remaining: ' + rateLimitRemaining.to_s
       sleepAmount = 1
-      while rateLimitRemaining < 1
+      while rateLimitRemaining <= 5
         sleep sleepAmount
         sleepAmount += 2
         rateLimitRemaining = self.class.github_client.rate_limit.remaining
@@ -44,11 +44,11 @@ class Pod::Specification
 end
 
 specs = Pod::SourcesManager.all_sets.map(&:specification)
-puts 'Number of specs: ' specs.count
+puts 'Number of specs: ' + specs.count.to_s
 #specs = specs.first(5) # For testing
 
 github_specs = specs.select do |spec|
-  puts "Checking #{spec.name}"
+puts "Checking #{spec.name}"
 
   begin
     spec.github? && !!spec.github_repo
